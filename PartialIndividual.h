@@ -13,7 +13,7 @@ using namespace std;
 
 // 定数
 #define GENERATION_MAX	20000					// 世代交代数
-#define WPOP_SIZE		200						// 全体解個体数
+#define WPOP_SIZE		201						// 全体解個体数
 #define PPOP_SIZE		250						// 部分個体数
 #define MUTATE_PROB		0.005					// 部分解突然変異確率
 #define MUTATE_PROB2	0.005					// 全体解突然変異確率
