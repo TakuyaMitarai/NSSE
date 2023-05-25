@@ -1,5 +1,7 @@
 #include "WholePopulation.h"
 
+vector<PartialIndividual*> WholePopulation::refpop;
+
 // コンストラクタ
 WholePopulation::WholePopulation()
 {
@@ -131,7 +133,17 @@ void WholePopulation::evaluation()
 	sort(0, WPOP_SIZE * 2 - 1);
 
 	//部分解の適応度
-	for(i = 0; i < WPOP_SIZE * 2; i++) {
+	for(i = 0; i < WPOP_SIZE * PReferenceRatio; i++) {
+		for(j = 0; j < WCHROM_LEN; j++) {
+			refpop.push_back(pop[i]->chrom[j]);
+			// 参照先の個体の適応度を算出
+			if(pop[i]->chrom[j]->fitness < pop[i]->fitness) {
+				pop[i]->chrom[j]->fitness = pop[i]->fitness;
+			}
+		}
+		
+	}
+	for(i = WPOP_SIZE * PReferenceRatio; i < WPOP_SIZE * 2; i++) {
 		// 参照先の個体の適応度を算出
 		for(j = 0; j < WCHROM_LEN; j++) {
 			if(pop[i]->chrom[j]->fitness < pop[i]->fitness) {

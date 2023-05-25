@@ -122,8 +122,8 @@ void WholeIndividual::objective_evaluation()
 	fitness2 = gx * hx;
 	*/
 
-	/*
 	//ZDT4
+	/*
 	fitness1 = (chrom[0]->chrom[0] + 5) / 10;
 	for(i = 0; i < WCHROM_LEN; i++) {
 		for(j = 0; j < PCHROM_LEN; j++){

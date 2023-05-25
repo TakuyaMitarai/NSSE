@@ -15,6 +15,7 @@ public:
 	void reference();
 
 	WholeIndividual* pop[WPOP_SIZE*2];	// 全体解個体
+	static vector<PartialIndividual*> refpop;	// 全体解個体が参照する部分解個体
 
 private:
 	void sort(int lb, int ub);

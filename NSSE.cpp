@@ -37,22 +37,23 @@ void NSSE::solve(void)
 		cout << "第" << gen << "世代" << endl;
 
 		//交叉する部分解個体の選択
+		std::sort(WholePopulation::refpop.begin(), WholePopulation::refpop.end());
+		cout << WholePopulation::refpop.size() << endl;
+		WholePopulation::refpop.erase(std::unique(WholePopulation::refpop.begin(), WholePopulation::refpop.end()), WholePopulation::refpop.end());
+		cout << WholePopulation::refpop.size() << endl;
 		vector<PartialIndividual*> poptmp = ppop->pop;
-		cout << poptmp.size() << endl;
-		for(i = 0; i < WPOP_SIZE * PReferenceRatio; i++) {
-			for(j = 0; j < WCHROM_LEN; j++) {
-				for(k = 0; k < poptmp.size(); k++) {
-					if(poptmp[k] == wpop->pop[i]->chrom[j]) {
-						poptmp.erase(poptmp.begin() + k);
-						break;
-					}
+		for(i = 0; i < WholePopulation::refpop.size(); i++) {
+			for(j = 0; j < poptmp.size(); j++) {
+				if(WholePopulation::refpop[i] == poptmp[j]) {
+					poptmp.erase(poptmp.begin() + j);
+					break;
 				}
 			}
 		}
 		cout << poptmp.size() << endl;
 		//部分解世代交代
 		ppop->newGeneration(poptmp);
-
+		WholePopulation::refpop.clear();
 		//全体解世代交代
 		wpop->newWholeGeneration();
 
