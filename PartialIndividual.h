@@ -21,9 +21,9 @@ using namespace std;
 #define MUTATE_PROBI2	MUTATE_PROB2*RAND_MAX	// 全体解突然変異 * RAND_MAX
 #define WCHROM_LEN		20						// 全体解遺伝子数
 #define PCHROM_LEN		5						// 部分解遺伝子数
-#define TOURNAMENT_SIZE 10						// 混雑度トーナメント数
-#define PReferenceRatio	0.4						// 部分解の進化において確実に継承される全体解個体の割合
-#define WReferenceRatio	1.7					// 全体解の進化において確実に継承される全体解個体の割合
+#define TOURNAMENT_SIZE 30						// 混雑度トーナメント数
+#define PReferenceRatio	0.7						// 部分解の進化において確実に継承される全体解個体の割合
+#define WReferenceRatio	1.2						// 全体解の進化において確実に継承される全体解個体の割合
 #define PI				3.141592
 
 class PartialIndividual

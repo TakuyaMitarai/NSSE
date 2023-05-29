@@ -92,9 +92,9 @@ void WholePopulation::evaluation()
 		next_s.push_back(i);
 	}
 	//目的関数の算出
-	for(i = 0; i < WPOP_SIZE * 2; i++) {
-		pop[i]->objective_evaluation();
-	}
+	#pragma omp parallel for
+	for(i = 0; i < WPOP_SIZE * 2; i++) pop[i]->objective_evaluation();
+
 	//パレートランキングの算出
 	while(current_cnt < WPOP_SIZE * 2) {
 		cnt = current_cnt;
@@ -125,6 +125,7 @@ void WholePopulation::evaluation()
 		congestion(rank, rank_s);
 		rank++;
 	}
+	//#pragma omp parallel for
 	for(i = 0; i < WPOP_SIZE * 2; i++) {
 		pop[i]->rankfit += 1 / (pop[i]->fitness * 10 + 1);
 		pop[i]->fitness = pop[i]->rankfit;
@@ -137,7 +138,7 @@ void WholePopulation::evaluation()
 		for(j = 0; j < WCHROM_LEN; j++) {
 			refpop.push_back(pop[i]->chrom[j]);
 			// 参照先の個体の適応度を算出
-			if(pop[i]->chrom[j]->fitness < pop[i]->fitness) {
+			if(pop[i]->chrom[j]->fitness > pop[i]->fitness) {
 				pop[i]->chrom[j]->fitness = pop[i]->fitness;
 			}
 		}
@@ -146,7 +147,7 @@ void WholePopulation::evaluation()
 	for(i = WPOP_SIZE * PReferenceRatio; i < WPOP_SIZE * 2; i++) {
 		// 参照先の個体の適応度を算出
 		for(j = 0; j < WCHROM_LEN; j++) {
-			if(pop[i]->chrom[j]->fitness < pop[i]->fitness) {
+			if(pop[i]->chrom[j]->fitness > pop[i]->fitness) {
 				pop[i]->chrom[j]->fitness = pop[i]->fitness;
 			}
 		}

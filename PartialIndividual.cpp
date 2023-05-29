@@ -12,7 +12,7 @@ PartialIndividual::PartialIndividual()
 		//chrom[i] =  (double)(rand() % 100000) / 100000; //Discontinuous Pareto-optimal front
 		//chrom[i] =  rand() % 2; //多目的部分だまし問題
 	}
-	fitness = 0;
+	fitness = DBL_MAX;
 }
 
 // デストラクタ
@@ -25,7 +25,6 @@ PartialIndividual::~PartialIndividual()
 void PartialIndividual::newGeneration()
 {
 	mutate();
-	fitness = 0;
 }
 
 // 二点交叉
@@ -47,7 +46,6 @@ void PartialIndividual::newGeneration(PartialIndividual* p1, PartialIndividual* 
 	for( ; i < PCHROM_LEN; i++)
 		chrom[i] = p1->chrom[i];
 	mutate();
-	fitness = 0;
 }
 
 // 突然変異

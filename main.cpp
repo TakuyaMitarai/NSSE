@@ -4,12 +4,11 @@
 int main()
 {
 	int i;
-	float comptime;
-	clock_t start;
+	struct timespec startTime, endTime;
 	NSSE *se;
 
 	// 時間計測スタート
-	start = clock();
+	clock_gettime(CLOCK_REALTIME, &startTime);
 
 	// 乱数のタネの設定
 	srand((unsigned int)time(NULL));
@@ -19,9 +18,17 @@ int main()
 	se->solve();
 
 	// 処理時間計算
-	comptime = (float)(clock() - start) / CLOCKS_PER_SEC;
+	clock_gettime(CLOCK_REALTIME, &endTime);
 
-	printf("処理時間：%f秒\n", comptime);
+	printf("time = ");
+    if (endTime.tv_nsec < startTime.tv_nsec) {
+      printf("%5ld.%09ld", endTime.tv_sec - startTime.tv_sec - 1,
+             endTime.tv_nsec + (long int)1.0e+9 - startTime.tv_nsec);
+    } else {
+      printf("%5ld.%09ld", endTime.tv_sec - startTime.tv_sec,
+             endTime.tv_nsec - startTime.tv_nsec);
+    }
+    printf("(sec)\n");
 
 	// 後処理
 	delete se;

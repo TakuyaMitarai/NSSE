@@ -24,12 +24,13 @@ void PartialPopulation::newGeneration(vector<PartialIndividual*> poptmp)
 	int i, j, k, a, fit1, tmp1, tmp2, index1, index2;
 	int cnt = 0;
 
+	//#pragma omp parallel for
 	for(k = 0; k < poptmp.size(); k++) {
 		tmp1 = rand() % PPOP_SIZE;
 		fit1 = pop[tmp1]->fitness;
 		for(i = 0; i < TOURNAMENT_SIZE; i++) {
 			a = rand() % PPOP_SIZE;
-			if(fit1 < pop[a]->fitness) {
+			if(fit1 > pop[a]->fitness) {
 				fit1 = pop[a]->fitness;
 				tmp1 = a;
 			}
@@ -38,7 +39,7 @@ void PartialPopulation::newGeneration(vector<PartialIndividual*> poptmp)
 		fit1 = pop[tmp2]->fitness;
 		for(i = 0; i < TOURNAMENT_SIZE; i++) {
 			a = rand() % PPOP_SIZE;
-			if(fit1 < pop[a]->fitness) {
+			if(fit1 > pop[a]->fitness) {
 				fit1 = pop[a]->fitness;
 				tmp2 = a;
 			}
@@ -59,7 +60,7 @@ void PartialPopulation::evalinit()
 	int i;
 	
 	for(i = 0; i < pop.size(); i++)
-		pop[i]->fitness = 0;
+		pop[i]->fitness = DBL_MAX;
 }
 
 // 部分解個体の評価
