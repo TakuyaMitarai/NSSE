@@ -53,13 +53,13 @@ void WholePopulation::sort(int lb, int ub)
 
 	if(lb < ub) {
 		k = (lb + ub) / 2;
-		pivot = pop[k]->rankfit;
+		pivot = pop[k]->fitness;
 		i = lb;
 		j = ub;
 		do {
-			while(pop[i]->rankfit < pivot)
+			while(pop[i]->fitness < pivot)
 				i++;
-			while(pop[j]->rankfit > pivot)
+			while(pop[j]->fitness > pivot)
 				j--;
 			if(i <= j) {
 				swap = pop[i];
@@ -127,8 +127,7 @@ void WholePopulation::evaluation()
 	}
 	//#pragma omp parallel for
 	for(i = 0; i < WPOP_SIZE * 2; i++) {
-		pop[i]->rankfit += 1 / (pop[i]->fitness * 10 + 1);
-		pop[i]->fitness = pop[i]->rankfit;
+		pop[i]->fitness = pop[i]->rankfit + 1 / (pop[i]->fitness * 10 + 1);
 	}
 	//全体解個体のソート
 	sort(0, WPOP_SIZE * 2 - 1);

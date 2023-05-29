@@ -24,7 +24,7 @@ void PartialPopulation::newGeneration(vector<PartialIndividual*> poptmp)
 	int i, j, k, a, fit1, tmp1, tmp2, index1, index2;
 	int cnt = 0;
 
-	//#pragma omp parallel for
+	#pragma omp parallel for
 	for(k = 0; k < poptmp.size(); k++) {
 		tmp1 = rand() % PPOP_SIZE;
 		fit1 = pop[tmp1]->fitness;
